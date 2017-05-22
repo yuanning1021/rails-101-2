@@ -25,6 +25,17 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  def update
+    @group = Group.find(params[:group_id])
+    @post = Post.find(params[:id])
+    @post.user = current_user
+
+    if @post.update(post_params)
+      redirect_to account_posts_path, notice: "Update Success"
+    else
+      render :edit
+    end
+  end
     private
 
     def post_params
